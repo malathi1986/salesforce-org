@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>JobApplication__c</fullName>
+    <description>secondary  master detail relationship for junction object</description>
+    <externalId>false</externalId>
+    <label>JobApplication</label>
+    <referenceTo>JobApplication__c</referenceTo>
+    <relationshipLabel>jun_Jobpostions_C</relationshipLabel>
+    <relationshipName>jun_Jobpostions_C</relationshipName>
+    <relationshipOrder>1</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

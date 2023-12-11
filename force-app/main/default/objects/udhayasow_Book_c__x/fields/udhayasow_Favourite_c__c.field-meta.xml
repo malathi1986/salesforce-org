@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>udhayasow_Favourite_c__c</fullName>
+    <externalDeveloperName>udhayasow__Favourite__c</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Favourite</label>
+    <required>false</required>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Cricket</fullName>
+                <default>false</default>
+                <label>Cricket</label>
+            </value>
+            <value>
+                <fullName>Cinema</fullName>
+                <default>false</default>
+                <label>Cinema</label>
+            </value>
+            <value>
+                <fullName>Nature Follower</fullName>
+                <default>false</default>
+                <label>Nature Follower</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

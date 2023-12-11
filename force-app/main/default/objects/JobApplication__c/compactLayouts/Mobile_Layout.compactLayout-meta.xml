@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mobile_Layout</fullName>
+    <fields>JobApplications__c</fields>
+    <fields>ChildCount__c</fields>
+    <fields>CreatedById</fields>
+    <fields>Name</fields>
+    <fields>LastModifiedById</fields>
+    <fields>OwnerId</fields>
+    <fields>Position__c</fields>
+    <fields>rating__c</fields>
+    <fields>Recordcount__c</fields>
+    <fields>Status__c</fields>
+    <label>Mobile Layout</label>
+</CompactLayout>

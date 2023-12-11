@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CandidatemobileLayout</fullName>
+    <fields>City_del__c</fields>
+    <fields>LastName__c</fields>
+    <fields>Education__c</fields>
+    <fields>Years_of_Experience__c</fields>
+    <label>CandidatemobileLayout</label>
+</CompactLayout>

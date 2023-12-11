@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>testmultiselectpicklist__c</fullName>
+    <externalId>false</externalId>
+    <label>testmultiselectpicklist</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>daper</fullName>
+                <default>false</default>
+                <label>daper</label>
+            </value>
+            <value>
+                <fullName>loton</fullName>
+                <default>false</default>
+                <label>loton</label>
+            </value>
+            <value>
+                <fullName>cream</fullName>
+                <default>false</default>
+                <label>cream</label>
+            </value>
+            <value>
+                <fullName>cereal</fullName>
+                <default>false</default>
+                <label>cereal</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

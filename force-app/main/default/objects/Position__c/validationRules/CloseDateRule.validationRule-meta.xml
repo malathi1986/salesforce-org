@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CloseDateRule</fullName>
+    <active>true</active>
+    <description>Close date should not be left empty when the status is closed</description>
+    <errorConditionFormula>ISBLANK( Close_Date__c ) &amp;&amp;
+ ISPICKVAL( Status__c ,&quot;closed-Filled&quot; ) ||
+ ISPICKVAL( Status__c ,&quot;closed-NotApproved&quot; )</errorConditionFormula>
+    <errorMessage>Close Date Must be specified when Status is closed -Filled or closed-NotApproved.</errorMessage>
+</ValidationRule>
