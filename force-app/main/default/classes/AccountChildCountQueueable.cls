@@ -30,6 +30,5 @@ global class AccountChildCountQueueable implements Queueable {
         }
         
         update accountToBeUpdated;
-        
     }
 }
