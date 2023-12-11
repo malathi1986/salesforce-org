@@ -28,7 +28,6 @@ global class AccountChildCountQueueable implements Queueable {
             Account accTemp = new Account(Id=acc.Id, Total_Numof_ChildRecord__c = count );
             accountToBeUpdated.add(accTemp);
         }
-        
         update accountToBeUpdated;
     }
 }
