@@ -3,9 +3,7 @@ global class AccountChildCountQueueable implements Queueable {
     public List<Account> accountsToBeProcessed = null;
     
     public AccountChildCountQueueable(List<Account> accounts){
-        
-        this.accountsToBeProcessed = accounts;
-        
+        this.accountsToBeProcessed = accounts; 
     }
    
     public void execute(System.QueueableContext context){
