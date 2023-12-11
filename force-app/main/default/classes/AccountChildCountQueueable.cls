@@ -18,7 +18,6 @@ global class AccountChildCountQueueable implements Queueable {
         for(Account acc : accountMap.values()){
             
             Integer count = 0;
-            
             if(acc!=null && acc.contacts!=null && acc.contacts.size() > 0) {
                 count = count + acc.contacts.size();
             }    
