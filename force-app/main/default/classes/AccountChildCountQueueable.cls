@@ -5,7 +5,6 @@ global class AccountChildCountQueueable implements Queueable {
     public AccountChildCountQueueable(List<Account> accounts){
         this.accountsToBeProcessed = accounts; 
     }
-   
     public void execute(System.QueueableContext context){
         
         Map<Id,Account> accountMap = new Map<Id,Account> ([Select Id, Total_Numof_ChildRecord__c, 
@@ -13,7 +12,6 @@ global class AccountChildCountQueueable implements Queueable {
                                                            (select Id from Opportunities)
                                                            from Account where Id IN:accountsToBeProcessed]);
         List<Account> accountToBeUpdated = new List<Account>();
-        
         List<Account> accounts = accountMap.values();
         for(Account acc : accountMap.values()){
             Integer count = 0;
