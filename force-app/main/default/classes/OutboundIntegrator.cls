@@ -6,6 +6,8 @@ public with sharing class OutboundIntegrator {
         OutboundAPI outAPI = (OutboundAPI)JSON.deserialize(outAPIString, OutboundAPI.class);
         System.debug(LoggingLevel.INFO, 'outAPI --> '+outAPI);
         System.debug(LoggingLevel.INFO, 'outAPI.integrationName --> '+outAPI.integrationName);
+        System.debug(LoggingLevel.INFO, 'outAPI.vehicleName --> '+outAPI.vehicleName);
+        System.debug(LoggingLevel.INFO, 'outAPI.vehicleName --> '+outAPI.vehicleTypes);
         //Get the integration details
         Integeration_Setting__mdt integration = getIntegrationRecord(outAPI.integrationName);
         System.debug(LoggingLevel.INFO, 'integration --> '+integration);
@@ -22,6 +24,7 @@ public with sharing class OutboundIntegrator {
             httpBody = prepareHttpRequestBody(integration, outAPI);
             request.setBody(httpBody);
         }
+
         HttpResponse response = http.send(request);
         // If the request is successful, parse the JSON response.
         if(response.getStatusCode() == 200) {
@@ -43,6 +46,7 @@ public with sharing class OutboundIntegrator {
         IntegerationLogs__c integerationLogs=new IntegerationLogs__c();
         integerationLogs.HttpRequest__c=call.request.getBody();
         integerationLogs.HttpResponse__c=call.response.getBody();
+        integerationLogs.ResponseStatus__c=call.response.getStatus();
         integerationLogs.OutboundAPI__c=call.integration.HttpEndpoint__c;
         integerationLogs.Start_Time__c=call.startTime;
         integerationLogs.End_Time__c=call.endTime;
@@ -78,7 +82,7 @@ public with sharing class OutboundIntegrator {
     private static String processResponse(HttpResponse response, Integeration_Setting__mdt integrationSetting, OutboundAPI outApi){
         // Deserialize the JSON string into collections of primitive data types.
         OutboundAPIResponseHandler responseHandler = (OutboundAPIResponseHandler)Type.forName(integrationSetting.ResponseHandler__c).newInstance();
-        responseHandler.processResponse(response);
+        responseHandler.processResponse(response,outApi);
         return null;
     }
 
