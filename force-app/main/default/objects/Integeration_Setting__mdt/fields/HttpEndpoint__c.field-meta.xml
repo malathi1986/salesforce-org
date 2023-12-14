@@ -3,7 +3,7 @@
     <fullName>HttpEndpoint__c</fullName>
     <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
-    <label>HttpEndpoint</label>
+    <label>Http Endpoint</label>
     <required>false</required>
     <type>Url</type>
 </CustomField>

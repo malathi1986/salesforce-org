@@ -3,8 +3,8 @@
     <fullName>ResponseHandler__c</fullName>
     <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
-    <label>ResponseHandler</label>
-    <length>20</length>
+    <label>Response Handler</label>
+    <length>255</length>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>
