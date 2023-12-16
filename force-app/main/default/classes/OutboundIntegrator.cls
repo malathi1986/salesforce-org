@@ -21,14 +21,21 @@ public with sharing class OutboundIntegrator {
         request.setMethod(integration.http_method__c);
         request.setHeader('tracking_id', generateUniqueIdentifier());
         String httpBody = null;
+        
         if(integration.is_Http_Body_Required__c){
             httpBody = prepareHttpRequestBody(integration, outAPI);
             request.setBody(httpBody);
         }
-
+        
+        if(integration.Authentication_Required__c){
+            handleAuthentication(integration, request);
+        }
+        
         HttpResponse response = http.send(request);
+        System.debug(LoggingLevel.INFO, 'response 9'+response.getBody());
         // If the request is successful, parse the JSON response.
         if(response.getStatusCode() == 200) {
+            System.debug(LoggingLevel.INFO, 'response 1'+response.getBody());
             processResponse(response, integration, outAPI);
         } 
         Datetime endTime = Datetime.now();
@@ -42,6 +49,33 @@ public with sharing class OutboundIntegrator {
         call.startTime=startTime;
         call.endTime=endTime;
         createIntegerationLogs(call);
+    }
+    private static void handleAuthentication(Integeration_Setting__mdt integrationSetting, HttpRequest request){
+        Map<String, Object> tokenMap = getAccessToken(integrationSetting);
+        request.setHeader('Authorization', 'Bearer '+tokenMap.get('access_token').toString());
+        request.setHeader('Content-Type', 'application/json');
+        request.setHeader('Content-Length', '0');
+    }
+
+    private static Map<String, Object> getAccessToken(Integeration_Setting__mdt integrationSetting){
+
+        Http http = new Http();
+        Authentication_Parameters__mdt auth = integrationSetting.Authentication_Parameters__r[0];
+        //https://udhayasow-dev-ed.my.salesforce.com/services/oauth2/token?grant_type=password&client_id=3MVG9fMtCkV6eLhe6Z1RLCpHYuyKaio3dckyngdFFsuXSLHVX9mbhdiqXitEn01eSYZA3qPk2GG8MpUUIL3Co&client_secret=90326F2B33DB99822059EE2E3EEB989E02B092052358DEC1E929AFDA1349C41E&username=partner.leadintegration@gmail.com.st&password=Malathi@123JEgdROqcjVlJTvg0jkkmD8I9
+        
+        HttpRequest request = new HttpRequest();
+        String queryParameters = '?grant_type='+auth.Grant_Type__c+'&client_id='+auth.Client_Id__c+'&client_secret='+auth.Client_Secret__c+'&username='+auth.User_name__c+'&password='+auth.Password__c;
+        String endPoint = auth.Access_Token_URL__c+queryParameters;
+        request.setEndpoint(endPoint);
+        request.setMethod('POST');
+        HttpResponse response = http.send(request);
+        // If the request is successful, parse the JSON response.
+        Map<String, Object> responseJsonMap = null;
+        if(response.getStatusCode() == 200) {
+            responseJsonMap = (Map<String, Object>)JSON.deserializeUntyped(response.getBody());
+        }  
+    
+        return responseJsonMap;
     }
     private static String createIntegerationLogs(CalloutVO call){
         
@@ -82,7 +116,6 @@ public with sharing class OutboundIntegrator {
             responseContentVersion.Title = 'Response'; // Display name of the files
             String base64Content = (String)JSON.deserialize( call.response.getBody(), String.class);
             if(base64Content!=null){
-                //Blob body = EncodingUtil.base64Decode(JSON.deserializeUntyped(call.response.getBody());
                 responseContentVersion.VersionData = Blob.valueOf(base64Content);
                 contentVersionList.add(responseContentVersion);
             } 
@@ -118,13 +151,6 @@ public with sharing class OutboundIntegrator {
     private static String prepareHttpRequestBody(Integeration_Setting__mdt integrationSetting, OutboundAPI outApi){
         String jsonString = null;
         if(integrationSetting.is_Http_Body_Required__c){
-            /*OutboundAPIRequestHandler out = null;
-            if(integrationSetting.DeveloperName == 'Car_Manufacturer_Validation'){
-                 out = new VechicleOutboundAPIResponseHandler();
-            }
-            if(integrationSetting.DeveloperName == 'Animal_Validation'){
-                out = new AnimalOutboundAPIResponseHandler();
-           }*/
             OutboundAPIRequestHandler responseHandler = (OutboundAPIRequestHandler)Type.forName(integrationSetting.RequestHandler__c).newInstance();
             responseHandler.prepareJsonRequest(outApi);
         }
@@ -147,9 +173,6 @@ public with sharing class OutboundIntegrator {
     
     private static Integeration_Setting__mdt getIntegrationRecord(String integrationName){
         return [SELECT Authentication_Required__c,
-                        Authentication__c,
-                        ClientId__c,
-                        ClientSecret__c,
                         DeveloperName,
                         HttpEndpoint__c,
                         http_method__c,
@@ -163,7 +186,20 @@ public with sharing class OutboundIntegrator {
                         QualifiedApiName,
                         RequestHandler__c,
                         ResponseHandler__c,
-                        is_Http_Body_Required__c 
+                        is_Http_Body_Required__c,
+                        (SELECT Access_Token_URL__c,
+                                Client_Id__c,
+                                Client_Secret__c,
+                                DeveloperName,
+                                User_name__c,
+                                Password__c,
+                                Grant_Type__c,
+                                Id,
+                                IntegerationSetting__c,
+                                Label,
+                                Language,
+                                MasterLabel 
+                            FROM Authentication_Parameters__r) 
                 FROM Integeration_Setting__mdt 
                 WHERE DeveloperName =:integrationName 
                 WITH SECURITY_ENFORCED
