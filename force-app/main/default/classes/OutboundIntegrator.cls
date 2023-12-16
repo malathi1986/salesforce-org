@@ -86,8 +86,10 @@ public with sharing class OutboundIntegrator {
                 responseContentVersion.VersionData = Blob.valueOf(base64Content);
                 contentVersionList.add(responseContentVersion);
             } 
-            contentVersionList.add(responseContentVersion);
+            
         }
+        System.debug(LoggingLevel.INFO, 'contentVersionList ======='+contentVersionList);
+        insert contentVersionList;
 
         List<ContentVersion> contentVersions = [SELECT ContentDocumentId FROM ContentVersion WHERE Id IN : contentVersionList];
 
@@ -97,8 +99,7 @@ public with sharing class OutboundIntegrator {
             ContentDocumentLink cDe = new ContentDocumentLink();
             cDe.ContentDocumentId = contentV.ContentDocumentId;
             cDe.LinkedEntityId = integerationLog.Id; // you can use objectId,GroupId etc
-            cDe.ShareType = 'I'; // Inferred permission, checkout description of ContentDocumentLink object for more details
-            cDe.Visibility = 'InternalUsers';
+            cDe.ShareType = 'V'; // Inferred permission, checkout description of ContentDocumentLink object for more details
             contentDocumentLinks.add(cDe);
         }
         insert contentDocumentLinks;
