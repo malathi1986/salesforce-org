@@ -6,9 +6,22 @@ public with sharing class ServiceRequestTriggerHandler {
         }
         OutboundAPI outAPI = new OutboundAPI();
         outAPI.integrationName ='Car_Manufacturer_Validation';
+        outAPI.vehicleName ='Tesla';
         outAPI.recordIds = serviceRequestIds;
         String outAPIJson = JSON.serialize(outAPI);
         OutboundIntegrator.invokeApi(outAPIJson);
 
+        
+       // Service_Request__c srvReq= new Service_Request__c();
+        OutboundAPI outMakeIdAPI = new OutboundAPI();
+        outMakeIdAPI.integrationName ='Car_Making_Validation';
+        //outAPI.vehicleName ='Tesla';
+        //outMakeIdAPI.makeId=makeIds;
+        outMakeIdAPI.recordIds = serviceRequestIds;
+        String outMakeIdAPIJson = JSON.serialize(outMakeIdAPI);
+        OutboundIntegrator.invokeApi(outMakeIdAPIJson);
+
+
+        
     }
 }
