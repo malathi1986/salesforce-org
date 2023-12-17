@@ -21,9 +21,11 @@ public with sharing class OutboundIntegrator {
         request.setMethod(integration.http_method__c);
         request.setHeader('tracking_id', generateUniqueIdentifier());
         String httpBody = null;
+
+        OutboundAPIHandler outAPIHandler = (OutboundAPIHandler)Type.forName(integration.Custom_API_Handler__c).newInstance();
         
         if(integration.is_Http_Body_Required__c){
-            httpBody = prepareHttpRequestBody(integration, outAPI);
+            httpBody = prepareHttpRequestBody(integration, outAPI, outAPIHandler);
             request.setBody(httpBody);
         }
         
@@ -80,8 +82,6 @@ public with sharing class OutboundIntegrator {
     private static String createIntegerationLogs(CalloutVO call){
         
         IntegerationLogs__c integerationLogs=new IntegerationLogs__c();
-        //integerationLogs.HttpRequest__c=call.request.getBody();
-        //integerationLogs.HttpResponse__c=call.response.getBody();
         integerationLogs.ResponseStatus__c=call.response.getStatus();
         integerationLogs.OutboundAPI__c=call.integration.HttpEndpoint__c;
         integerationLogs.Start_Time__c=call.startTime;
@@ -148,12 +148,13 @@ public with sharing class OutboundIntegrator {
         }
         return jsonString;
     }
-    private static String prepareHttpRequestBody(Integeration_Setting__mdt integrationSetting, OutboundAPI outApi){
+    private static String prepareHttpRequestBody(Integeration_Setting__mdt integrationSetting, OutboundAPI outApi,OutboundAPIHandler outAPIHandler){
         String jsonString = null;
         if(integrationSetting.is_Http_Body_Required__c){
-            OutboundAPIRequestHandler responseHandler = (OutboundAPIRequestHandler)Type.forName(integrationSetting.RequestHandler__c).newInstance();
-            responseHandler.prepareJsonRequest(outApi);
+            System.debug(LoggingLevel.INFO, 'Inside '+jsonString);
+            jsonString = outAPIHandler.prepareJsonRequest(outApi);
         }
+        System.debug(LoggingLevel.INFO, 'jsonString '+jsonString);
         return jsonString;
     }
 
@@ -187,6 +188,7 @@ public with sharing class OutboundIntegrator {
                         RequestHandler__c,
                         ResponseHandler__c,
                         is_Http_Body_Required__c,
+                        Custom_API_Handler__c,
                         (SELECT Access_Token_URL__c,
                                 Client_Id__c,
                                 Client_Secret__c,
