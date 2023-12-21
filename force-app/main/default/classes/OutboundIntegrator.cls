@@ -1,7 +1,6 @@
 public with sharing class OutboundIntegrator {
 
-    @future(callout=true)
-    public static void invokeApi(String outAPIString){
+    public static void invokeApiRetry(String outAPIString){
         System.debug(LoggingLevel.INFO, 'outAPIString --> '+outAPIString);
         OutboundAPI outAPI = (OutboundAPI)JSON.deserialize(outAPIString, OutboundAPI.class);
         System.debug(LoggingLevel.INFO, 'outAPI --> '+outAPI);
@@ -32,17 +31,20 @@ public with sharing class OutboundIntegrator {
         if(integration.Authentication_Required__c){
             handleAuthentication(integration, request);
         }
-        
+        CalloutVO call = new CalloutVO();
+
         HttpResponse response = http.send(request);
         System.debug(LoggingLevel.INFO, 'response 9'+response.getBody());
         // If the request is successful, parse the JSON response.
-        if(response.getStatusCode() == 200) {
+        if(response.getStatusCode() == 200 || response.getStatusCode() == 201) {
             System.debug(LoggingLevel.INFO, 'response 1'+response.getBody());
-            processResponse(response, integration, outAPI);
-        } 
+            processResponse(response, integration, outAPI,outAPIHandler);
+            call.calloutStatus = true;
+        } else {
+            call.calloutStatus = false;
+        }
         Datetime endTime = Datetime.now();
 
-        CalloutVO call = new CalloutVO();
         call.request = request;
         call.response = response;
         call.integration = integration;
@@ -51,6 +53,11 @@ public with sharing class OutboundIntegrator {
         call.startTime=startTime;
         call.endTime=endTime;
         createIntegerationLogs(call);
+    }
+
+    @future(callout=true)
+    public static void invokeApi(String outAPIString){
+        invokeApiRetry(outAPIString);
     }
     private static void handleAuthentication(Integeration_Setting__mdt integrationSetting, HttpRequest request){
         Map<String, Object> tokenMap = getAccessToken(integrationSetting);
@@ -80,19 +87,23 @@ public with sharing class OutboundIntegrator {
         return responseJsonMap;
     }
     private static String createIntegerationLogs(CalloutVO call){
-        
-        IntegerationLogs__c integerationLogs=new IntegerationLogs__c();
+        System.debug(LoggingLevel.INFO, 'call '+call);
+        Integration_Logs__c integerationLogs=new Integration_Logs__c();
         integerationLogs.ResponseStatus__c=call.response.getStatus();
         integerationLogs.OutboundAPI__c=call.integration.HttpEndpoint__c;
         integerationLogs.Start_Time__c=call.startTime;
         integerationLogs.End_Time__c=call.endTime;
+        String recordIds = String.join(call.outApi.recordIds,',');
+        integerationLogs.Record_Ids__c =recordIds;
+        integerationLogs.Integration_name__c = call.outApi.integrationName;
+        integerationLogs.Callout_Status__c = call.calloutStatus;
         insert integerationLogs;
         createAttachments(call,integerationLogs);
         return null;
 
     }
 
-    private static void createAttachments(CalloutVO call, IntegerationLogs__c integerationLog){
+    private static void createAttachments(CalloutVO call, Integration_Logs__c integerationLog){
        
         List<ContentVersion> contentVersionList = new List<ContentVersion>();
 
@@ -158,10 +169,10 @@ public with sharing class OutboundIntegrator {
         return jsonString;
     }
 
-    private static String processResponse(HttpResponse response, Integeration_Setting__mdt integrationSetting, OutboundAPI outApi){
+    private static String processResponse(HttpResponse response, Integeration_Setting__mdt integrationSetting, OutboundAPI outApi, OutboundAPIHandler outAPIHandler){
         // Deserialize the JSON string into collections of primitive data types.
-        OutboundAPIResponseHandler responseHandler = (OutboundAPIResponseHandler)Type.forName(integrationSetting.ResponseHandler__c).newInstance();
-        responseHandler.processResponse(response,outApi);
+        //OutboundAPIHandler responseHandler = (OutboundAPIHandler)Type.forName(integrationSetting.Custom_API_Handler__c).newInstance();
+        outAPIHandler.processResponse(response,outApi);
         return null;
     }
 
@@ -216,5 +227,6 @@ public with sharing class OutboundIntegrator {
         public DateTime startTime{public set;public get;}
         public DateTime endTime{public set;public get;}
         public Integeration_Setting__mdt integration {public set;public get;}
+        public Boolean calloutStatus {public set;public get;}
     }
 }
