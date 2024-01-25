@@ -162,6 +162,14 @@
                 <behavior>Edit</behavior>
                 <field>CleanStatus__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>testRollup__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DummyComment__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -554,11 +562,6 @@
             <quickActionName>SendEmail</quickActionName>
         </quickActionListItems>
     </quickActionList>
-    <relatedLists>
-        <fields>ExternalId</fields>
-        <fields>DisplayUrl</fields>
-        <relatedList>Order__x.customerID__c</relatedList>
-    </relatedLists>
     <relatedLists>
         <fields>ORDERS.ORDER_NUMBER</fields>
         <fields>ORDERS.STATUS</fields>

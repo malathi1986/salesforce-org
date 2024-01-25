@@ -165,6 +165,14 @@
                 <behavior>Edit</behavior>
                 <field>CleanStatus__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>testRollup__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DummyComment__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -458,11 +466,6 @@
             <sortOrder>23</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Edit</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>24</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>ChangeRecordType</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>25</sortOrder>
@@ -557,6 +560,11 @@
             <actionType>QuickAction</actionType>
             <sortOrder>39</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Edit</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>24</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <quickActionList>
         <quickActionListItems>
@@ -608,11 +616,6 @@
             <quickActionName>Account.Create_New_Opportunity</quickActionName>
         </quickActionListItems>
     </quickActionList>
-    <relatedLists>
-        <fields>ExternalId</fields>
-        <fields>DisplayUrl</fields>
-        <relatedList>Order__x.customerID__c</relatedList>
-    </relatedLists>
     <relatedLists>
         <fields>ORDERS.ORDER_NUMBER</fields>
         <fields>ORDERS.STATUS</fields>

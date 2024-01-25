@@ -1,8 +1,8 @@
 @isTest
 public class AddPrimaryContactTest {
     
-    @testsetup
-    public static void createTestData(){
+        @testsetup
+        public static void createTestData(){
         Test.setMock(HttpCalloutMock.class, new HttpMockResponse());
         List<Account> accounts = new List<Account>();
         for(Integer i=0;i<50;i++){
