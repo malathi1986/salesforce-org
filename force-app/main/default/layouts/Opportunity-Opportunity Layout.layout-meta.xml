@@ -66,6 +66,10 @@
                 <behavior>Edit</behavior>
                 <field>Billingcountry__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Corporate_card_required__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -462,6 +466,10 @@
         <fields>ACCOUNT.ADDRESS1_STREET</fields>
         <fields>ACCOUNT.ACCOUNT_NUMBER</fields>
         <relatedList>Account.OpportunityStage__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>InsightOpportunity__c.Opportunity__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

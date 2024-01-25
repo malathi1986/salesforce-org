@@ -10,6 +10,6 @@ public with sharing class LeadTriggerHandler {
         outAPI.integrationName ='Partner_Lead_Integration';
         outAPI.recordIds = leadRecordIds;
         String outAPIJson = JSON.serialize(outAPI);
-        OutboundIntegrator.invokeApi(outAPIJson);
+        //OutboundIntegrator.invokeApi(outAPIJson);
     }
 }

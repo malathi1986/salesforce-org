@@ -10,6 +10,6 @@ public with sharing class OpportunityTriggerHandler {
         outAPI.integrationName ='Partner_Opportunity_Integration';
         outAPI.recordIds = opportunityRecordIds;
         String outAPIJson = JSON.serialize(outAPI);
-        OutboundIntegrator.invokeApi(outAPIJson);
+        //OutboundIntegrator.invokeApi(outAPIJson);
     }
 }
