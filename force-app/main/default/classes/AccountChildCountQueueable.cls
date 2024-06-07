@@ -6,7 +6,9 @@ global class AccountChildCountQueueable implements Queueable {
         this.accountsToBeProcessed = accounts; 
     }
     public void execute(System.QueueableContext context){
-        System.debug(LoggingLevel.INFO, 'TEST ------');
+        
+
+        
         Map<Id,Account> accountMap = new Map<Id,Account> ([Select Id, Total_Numof_ChildRecord__c, 
                                                            (Select Id from Contacts),
                                                            (select Id from Opportunities)
