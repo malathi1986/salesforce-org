@@ -25,5 +25,20 @@ public with sharing class AccountTriggerHandler {
         }
 
     }
-
-}
+    //*When an account BillingCity is update , update all contacts MailingCity with account BillingCity//
+    public static void isAfterTrigger(List<Account> newAccounts) {
+       Map<Id,Account> acctWithRelatedContacts=new Map<Id,Account>([SELECT Id,(SELECT Id,MailingCity,AccountId FROM Contacts)From Account 
+                                              WHERE Id IN :newAccounts]);
+        List<Contact> updatedContacts=new List<Contact>();
+         for(Account acc:newAccounts)
+         {
+           Account databaseAcc=acctWithRelatedContacts.get(acc.Id);
+           List<Contact> relatedContacts=databaseAcc.Contacts;
+           for(Contact con:relatedContacts){
+            con.MailingCity=acc.BillingCity;
+           // updatedContacts.add(con);
+           }
+         }
+         update updatedContacts;
+        }
+    }
