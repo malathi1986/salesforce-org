@@ -12,7 +12,7 @@ export default class BoatReviews extends NavigationMixin(LightningElement) {
     error;
     boatReviews;
     isLoading;
-    
+    //adding changes in remote
     // Getter and Setter to allow for logic to run on recordId change
     @api
     get recordId() { 
