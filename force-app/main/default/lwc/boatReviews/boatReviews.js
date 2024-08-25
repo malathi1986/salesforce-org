@@ -6,13 +6,14 @@ import { NavigationMixin } from 'lightning/navigation';
 export default class BoatReviews extends NavigationMixin(LightningElement) {
     // Adding code changes here
 
-    
+
     // Private
     boatId;
     error;
     boatReviews;
     isLoading;
     
+    //....
     // Getter and Setter to allow for logic to run on recordId change
     @api
     get recordId() { 
