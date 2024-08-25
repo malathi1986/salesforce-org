@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BusinessAmount_OtherThanSystemAdmin</fullName>
+    <active>true</active>
+    <errorConditionFormula>$Profile.Name!=&apos;System Administrator&apos;</errorConditionFormula>
+    <errorDisplayField>BusinessValue__c</errorDisplayField>
+    <errorMessage>Business Value is mandatory for Users Other than Sysytem Admin</errorMessage>
+</ValidationRule>

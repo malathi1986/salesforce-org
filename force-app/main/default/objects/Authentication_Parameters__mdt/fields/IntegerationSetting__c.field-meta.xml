@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IntegerationSetting__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>IntegerationSetting</label>
+    <referenceTo>Integeration_Setting__mdt</referenceTo>
+    <relationshipLabel>Authentication Parameters</relationshipLabel>
+    <relationshipName>Authentication_Parameters</relationshipName>
+    <required>false</required>
+    <type>MetadataRelationship</type>
+    <unique>false</unique>
+</CustomField>
