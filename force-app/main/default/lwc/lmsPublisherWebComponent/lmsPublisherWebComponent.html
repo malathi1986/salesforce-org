@@ -1,0 +1,15 @@
+<!-- lmsPublisherWebComponent.html -->
+<template>
+    <lightning-card title="LMSPublisherWebComponent" icon-name="custom:custom30">
+      <div class="slds-m-around_medium" oncontactselect={handleContactSelect}>
+        <template lwc:if={contacts.data}>
+          <template for:each={contacts.data} for:item="contact">
+           
+              key={contact.Id}
+              contact={contact}>
+           
+          </template>
+        </template>
+      </div>
+    </lightning-card>
+  </template>

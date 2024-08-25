@@ -1,0 +1,27 @@
+<template>
+    <lightning-input type="text" class="oppnameCls" name='opportunityName' label="Opportunity Name" pattern="[A-Za-z0-9._-]+_[2023]+_[1]$" message-when-pattern-mismatch="Please enter a valid opportunity name" required onchange={handleopportunityNameChange}></lightning-input>
+
+    <lightning-input type="text" name='account' label="Account"></lightning-input>
+    <lightning-combobox
+            name="progress"
+            label="Status"
+            value={selectedRecordType}
+            placeholder="Select Recordtype"
+            options={options}
+            onchange={handleChange} ></lightning-combobox>
+
+<p>Selected value is: {value}</p>
+    <lightning-button variant="brand" label="Check" title="Primary action" class="slds-m-left_x-small" onclick={validateOpportunityName}></lightning-button> 
+    <template lwc:if={opportunityNameError}>
+        <p><lightning-formatted-text value={opportunityNameError} linkify></lightning-formatted-text></p>
+    </template>  
+    <template lwc:if={opportunitySuccess}>
+        <p><lightning-formatted-text value={opportunitySuccess} linkify></lightning-formatted-text></p>
+    </template> 
+    <template lwc:if={accountNameError}>
+        <p><lightning-formatted-text value={accountNameError} linkify></lightning-formatted-text></p>
+    </template>  
+    <template lwc:if={accountSuccess}>
+        <p><lightning-formatted-text value={accountSuccess} linkify></lightning-formatted-text></p>
+    </template> 
+</template>

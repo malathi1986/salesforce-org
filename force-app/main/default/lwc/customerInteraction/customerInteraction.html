@@ -1,0 +1,10 @@
+<template>
+    <div style="border: 2px;background-color:rgb(141, 155, 141);height: 300px;">
+    <p>Customer interaction page</p>
+    <br></br>
+    <lightning-input-rich-text label="Custom comment" value={customerComments} ></lightning-input-rich-text>
+    <div style="padding-left: 30px;">
+    <lightning-button type="button" onclick={updateCustomerStatus} label="Update Account Status"></lightning-button>
+    </div>
+    </div>
+</template>

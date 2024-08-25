@@ -1,0 +1,31 @@
+<template>
+    <lightning-input type="firstName" name="firstName" label="First Name" value={firstName}>
+    </lightning-input>
+    <lightning-input type="lastName" name="lastName" label="Last Name" value={lastName}>
+    </lightning-input>
+    <lightning-input type="primaryEmail" name="primaryEmail" label="Primary Email" value={primaryEmail}>
+    </lightning-input>
+    <lightning-input type="userName" name="userName" label="User Name" value={userName} onchange={validateUserName}>
+    </lightning-input>
+    <p><lightning-formatted-text value={usernameExists} linkify></lightning-formatted-text></p>
+    <lightning-input type="password" name="password" label="Password" value={password}>
+    </lightning-input>
+    <lightning-button variant="brand" label="Save" title="Primary action" onclick={handleSave} class="slds-m-left_x-small"></lightning-button>
+    <lightning-button variant="brand" label="Cancel" title="Primary action" onclick={handleCancel} class="slds-m-left_x-small"></lightning-button>
+    <lightning-button variant="brand" label="Reset" title="Primary action" onclick={handleReset} class="slds-m-left_x-small"></lightning-button>
+    <lightning-button variant="brand" label="Delete" title="Primary action" onclick={handleDelete} class="slds-m-left_x-small"></lightning-button>
+   
+    <template lwc:if={errorMessage}>
+        <p>{errorMessage}</p>
+    </template>
+
+    <div style="height: 300px;">
+
+        <lightning-datatable
+                key-field="id"
+                data={tableData}
+                columns={columns}
+                onrowaction={handleRowAction}>
+        </lightning-datatable>
+    </div>
+</template>

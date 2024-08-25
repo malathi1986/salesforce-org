@@ -1,0 +1,26 @@
+<template>
+    <lightning-modal-header label="RelatedList Record Modal">
+        The modal tagline.
+    </lightning-modal-header>
+    <lightning-modal-body>
+        <template if:true ={options.Contacts}>
+            <span>Related Contact records</span>
+            <lightning-datatable
+                key-field="Id"
+                data={options.Contacts.Contacts}
+                columns={columns}
+                onrowaction={handleRowAction}>
+            </lightning-datatable>
+        </template>
+        <template if:true ={options.Opportunities}>
+            <span>Related Opportunity records</span>
+            <lightning-datatable
+                key-field="Id"
+                data={options.Opportunities.Opportunities}
+                columns={columns}
+                onrowaction={handleRowAction}>
+            </lightning-datatable>
+        </template>
+    </lightning-modal-body>
+    <!-- no <lightning-modal-footer> in this example -->   
+</template>

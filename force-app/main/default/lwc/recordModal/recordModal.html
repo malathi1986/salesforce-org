@@ -1,0 +1,14 @@
+<template>
+    <lightning-modal-header label="My Modal Heading">
+        The modal tagline.
+    </lightning-modal-header>
+    <lightning-modal-body>
+        <lightning-record-form
+            object-api-name={options.ObjectName}
+            record-id={options.Id}
+            fields={fields}
+        >
+</lightning-record-form>
+    </lightning-modal-body>
+    <!-- no <lightning-modal-footer> in this example -->
+</template>

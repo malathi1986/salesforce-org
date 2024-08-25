@@ -1,0 +1,17 @@
+<template>
+    <p>This is the main page</p>
+    <br/>
+    <br/>
+
+    <template lwc:if={searchTextDisplayRed}>
+        <p style="color: red;"> User entered the search text {searchedText}</p>
+    </template>
+
+    <template lwc:else>
+        <p style="color:aqua"> User entered the search text {searchedText}</p>
+    </template>    
+    <br/>
+    <br/>
+    <br/>
+    <c-child onsearchcomplete={proocessSearchCompleteEvent} country-name="USA"></c-child>
+</template>

@@ -1,0 +1,36 @@
+<template>
+    
+    <div style="width: 100%;">
+        <div style="width: 30%; height: 100px; float: left; background: white;"> 
+            <p><lightning-formatted-text value="Market" ></lightning-formatted-text></p>
+            <lightning-input type="checkbox" class="country" name="USA" label="USA" onchange={changeHandler}></lightning-input>
+ <lightning-input type="checkbox"  class="country" name="Canada" label="Canada" onchange={changeHandler}></lightning-input>
+ <lightning-input type="checkbox" class="country" name="Japan" label="Japan" onchange={changeHandler}></lightning-input>
+         </div>
+         <div style="width: 30%; height: 100px; float: left; background: white;"> 
+         <p><lightning-formatted-text value="Include" ></lightning-formatted-text></p>
+         <lightning-input type="checkbox" class="RelatedList" name="Contacts" label="Contact" onchange={relatedListHandler}></lightning-input>
+          <lightning-input type="checkbox"  class="RelatedList" name="Opportunities" label="Opportunity" onchange={relatedListHandler}></lightning-input>
+   </div>
+    
+ 
+ <div style="margin-left: 50%; height: 100px; background: blue;"> 
+   
+    <lightning-datatable
+                key-field="id"
+                data={data}
+                columns={columns}
+                onrowaction={handleRowAction}>
+        </lightning-datatable>
+</div>
+    
+ 
+        <!--<lightning-button
+        onclick={handleModalOpen}
+        aria-haspopup="dialog"
+        label="Launch Navigation Modal">
+    </lightning-button> -->
+   
+    </div>
+    
+</template>
