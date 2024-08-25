@@ -5,6 +5,8 @@ import { NavigationMixin } from 'lightning/navigation';
 // imports
 export default class BoatReviews extends NavigationMixin(LightningElement) {
     // Adding code changes here
+
+    
     // Private
     boatId;
     error;
