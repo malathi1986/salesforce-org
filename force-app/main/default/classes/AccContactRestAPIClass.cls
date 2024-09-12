@@ -3,6 +3,11 @@ global with sharing class AccContactRestAPIClass {
    @HttpPost
     global static void doPost(){
         String jsonString=RestContext.request.requestbody.toString();
+        Map<String, String> headersMap = RestContext.request.headers;
+        for (String header : headersMap.keySet()) {
+         System.debug('Request headers===>'+header + ':' + headersMap.get(header)) ;
+        }
+       
         System.debug('Request body===>'+jsonString) ;
         AccountData acctData = (AccountData) JSON.deserialize(jsonString, AccountData.class);
          Account a=new Account();
