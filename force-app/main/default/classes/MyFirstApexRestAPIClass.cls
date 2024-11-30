@@ -18,7 +18,6 @@ global with sharing class MyFirstApexRestAPIClass {
         acc.website=website;
         insert acc;
         return acc.Id;
-
     }
     @HttpDelete
     global static void doDelete() {
